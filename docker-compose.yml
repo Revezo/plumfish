@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+
+  plumfish:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+      - "15005:5005"
+    depends_on:
+      - mysql
+    restart: on-failure:10
+    container_name: plumfish
+
+  mysql:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: test
+      MYSQL_DATABASE: test
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+    ports:
+      - "3306:3306"
+    restart: on-failure:10
+    container_name: mysql
