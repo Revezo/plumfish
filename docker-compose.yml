@@ -1,0 +1,44 @@
+version: "3"
+
+services:
+  plumfish:
+    image: revezo/plumfish:0.1
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: plumfish
+    ports:
+      - 8080:8080
+      - 15005:5005
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/plumfish_db
+      SPRING_DATASOURCE_USERNAME: plumfish
+      SPRING_DATASOURCE_PASSWORD: plumfish
+      SPRING_RABBITMQ_ADDRESSES: rabbitmq:5672
+    entrypoint: ["java", "-agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=n", "-jar","/app.jar"]
+    depends_on:
+      - mysql
+      - rabbitmq
+
+  mysql:
+    image: mysql
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: plumfish_db
+      MYSQL_USER: plumfish
+      MYSQL_PASSWORD: plumfish
+    ports:
+      - 3306:3306
+    restart: on-failure:10
+
+  rabbitmq:
+    image: rabbitmq:3.8-management
+    container_name: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+    ports:
+      - 15672:15672 #management console
+      - 5672:5672
