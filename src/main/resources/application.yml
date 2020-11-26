@@ -12,7 +12,13 @@ spring:
 logging:
   level:
     "liquibase" : info
-
+modules:
+  publisher:
+    twitter-authentication:
+        consumerKey: consumerKey
+        consumerSecret: consumerSecret
+        token: token
+        tokenSecret: tokenSecret
 ---
 spring:
   datasource:
