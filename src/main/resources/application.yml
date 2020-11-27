@@ -13,7 +13,7 @@ logging:
   level:
     "liquibase" : info
 modules:
-  publisher:
+  producer:
     twitter-authentication:
         consumerKey: consumerKey
         consumerSecret: consumerSecret

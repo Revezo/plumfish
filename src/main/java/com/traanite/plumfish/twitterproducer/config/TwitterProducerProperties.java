@@ -1,4 +1,4 @@
-package com.traanite.plumfish.publisher;
+package com.traanite.plumfish.twitterproducer.config;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,11 +6,11 @@ import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
-@ConfigurationProperties(prefix = "modules.publisher")
+@ConfigurationProperties(prefix = "modules.producer")
 @Getter
 @Setter
 @ToString
-public class PublisherProperties {
+class TwitterProducerProperties {
 
     @NestedConfigurationProperty
     private TwitterAuthentication twitterAuthentication;

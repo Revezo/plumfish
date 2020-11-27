@@ -1,4 +1,4 @@
-package com.traanite.plumfish.publisher;
+package com.traanite.plumfish.twitterproducer.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,21 +13,24 @@ public class PullService implements StreamListener {
 
     @Override
     public void onTweet(Tweet tweet) {
-        log.info("onTweet");
+        if(tweet.getLanguageCode().equals("en")) {
+            log.info(tweet.getText());
+        }
     }
 
     @Override
     public void onDelete(StreamDeleteEvent deleteEvent) {
-        log.info("onDelete");
+        // not needed
     }
 
     @Override
     public void onLimit(int numberOfLimitedTweets) {
-        log.info("onLimit");
+        // not needed
     }
 
     @Override
     public void onWarning(StreamWarningEvent warningEvent) {
-        log.info("onWarning");
+        // not needed
     }
 }
+
