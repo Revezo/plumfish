@@ -1,8 +1,10 @@
-package com.traanite.plumfish.twitterproducer.config;
+package com.traanite.plumfish.twitter.config;
 
-import com.traanite.plumfish.twitterproducer.service.PullService;
+import com.traanite.plumfish.twitter.service.TwitterEventPublisher;
+import com.traanite.plumfish.twitter.service.TwitterStreamListener;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.social.InvalidAuthorizationException;
@@ -32,8 +34,13 @@ public class TwitterProducerConfig {
     }
 
     @Bean
-    public Stream twitsPullStream(Twitter twitter) {
-        return twitter.streamingOperations().sample(Collections.singletonList(new PullService()));
+    public Stream twitsPullStream(Twitter twitter, TwitterEventPublisher twitterEventPublisher) {
+        return twitter.streamingOperations().sample(Collections.singletonList(new TwitterStreamListener(twitterEventPublisher)));
+    }
+
+    @Bean
+    public TwitterEventPublisher tweeterEventPublisher(RabbitTemplate rabbitTemplate) {
+        return new TwitterEventPublisher(rabbitTemplate);
     }
 
     private void validateTwitterAuthorization(Twitter twitter) {

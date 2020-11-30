@@ -13,12 +13,14 @@ logging:
   level:
     "liquibase" : info
 modules:
-  producer:
+  twitter:
     twitter-authentication:
         consumerKey: consumerKey
         consumerSecret: consumerSecret
         token: token
         tokenSecret: tokenSecret
+  raffle:
+    randomApiKey: randomApiKey
 ---
 spring:
   datasource:

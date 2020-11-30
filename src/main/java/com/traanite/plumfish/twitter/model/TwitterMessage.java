@@ -1,4 +1,4 @@
-package com.traanite.plumfish.twitterproducer.model;
+package com.traanite.plumfish.twitter.model;
 
 import lombok.NonNull;
 import lombok.Value;

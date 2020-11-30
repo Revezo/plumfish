@@ -1,4 +1,4 @@
-package com.traanite.plumfish.twitterproducer.model;
+package com.traanite.plumfish.twitter.model;
 
 import com.traanite.plumfish.commons.events.DomainEvent;
 import lombok.NonNull;
@@ -8,7 +8,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 @Value
-public class TwitterMessageEvent implements DomainEvent {
+public class TweetCreatedEvent implements DomainEvent {
 
     @NonNull
     UUID eventId = UUID.randomUUID();

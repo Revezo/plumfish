@@ -1,4 +1,4 @@
-package com.traanite.plumfish.twitterproducer.config;
+package com.traanite.plumfish.twitter.config;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,7 +6,7 @@ import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
-@ConfigurationProperties(prefix = "modules.producer")
+@ConfigurationProperties(prefix = "modules.twitter")
 @Getter
 @Setter
 @ToString
