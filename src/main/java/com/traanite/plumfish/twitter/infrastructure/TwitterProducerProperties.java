@@ -1,4 +1,4 @@
-package com.traanite.plumfish.twitter.config;
+package com.traanite.plumfish.twitter.infrastructure;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -10,5 +10,5 @@ public class TwitterMessage implements Serializable {
     @NonNull
     String text;
     @NonNull
-    TwitterUser twitterUser;
+    TwitterUser creator;
 }

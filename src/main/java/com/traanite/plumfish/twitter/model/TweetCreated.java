@@ -8,7 +8,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 @Value
-public class TweetCreatedEvent implements DomainEvent {
+public class TweetCreated implements DomainEvent {
 
     @NonNull
     UUID eventId = UUID.randomUUID();

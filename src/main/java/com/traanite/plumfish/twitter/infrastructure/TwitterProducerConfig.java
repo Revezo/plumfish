@@ -1,7 +1,7 @@
-package com.traanite.plumfish.twitter.config;
+package com.traanite.plumfish.twitter.infrastructure;
 
-import com.traanite.plumfish.twitter.service.TwitterEventPublisher;
-import com.traanite.plumfish.twitter.service.TwitterStreamListener;
+import com.traanite.plumfish.twitter.application.TwitterStreamListener;
+import com.traanite.plumfish.twitter.model.TwitterEvents;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -34,13 +34,13 @@ public class TwitterProducerConfig {
     }
 
     @Bean
-    public Stream twitsPullStream(Twitter twitter, TwitterEventPublisher twitterEventPublisher) {
-        return twitter.streamingOperations().sample(Collections.singletonList(new TwitterStreamListener(twitterEventPublisher)));
+    public Stream twitsPullStream(Twitter twitter, TwitterEvents twitterEvents) {
+        return twitter.streamingOperations().sample(Collections.singletonList(new TwitterStreamListener(twitterEvents)));
     }
 
     @Bean
-    public TwitterEventPublisher tweeterEventPublisher(RabbitTemplate rabbitTemplate) {
-        return new TwitterEventPublisher(rabbitTemplate);
+    public TwitterEvents twitterEvents(RabbitTemplate rabbitTemplate) {
+        return new TwitterEventsAdapter(rabbitTemplate);
     }
 
     private void validateTwitterAuthorization(Twitter twitter) {

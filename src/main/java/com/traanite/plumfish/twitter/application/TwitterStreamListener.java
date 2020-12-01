@@ -1,6 +1,7 @@
-package com.traanite.plumfish.twitter.service;
+package com.traanite.plumfish.twitter.application;
 
-import com.traanite.plumfish.twitter.model.TweetCreatedEvent;
+import com.traanite.plumfish.twitter.model.TweetCreated;
+import com.traanite.plumfish.twitter.model.TwitterEvents;
 import com.traanite.plumfish.twitter.model.TwitterMessage;
 import com.traanite.plumfish.twitter.model.TwitterUser;
 import lombok.RequiredArgsConstructor;
@@ -15,12 +16,12 @@ import org.springframework.social.twitter.api.Tweet;
 @RequiredArgsConstructor
 public class TwitterStreamListener implements StreamListener {
 
-    private final TwitterEventPublisher twitterEventPublisher;
+    private final TwitterEvents twitterEvents;
 
     @Override
     public void onTweet(Tweet tweet) {
         if (tweet.getLanguageCode().equals("en")) {
-            twitterEventPublisher.publish(new TweetCreatedEvent(
+            twitterEvents.publish(new TweetCreated(
                     new TwitterMessage(tweet.getText(), new TwitterUser(tweet.getUser().getId(), tweet.getUser().getName()))));
         }
     }

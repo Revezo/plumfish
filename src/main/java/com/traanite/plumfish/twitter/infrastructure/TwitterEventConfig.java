@@ -1,4 +1,4 @@
-package com.traanite.plumfish.twitter.config;
+package com.traanite.plumfish.twitter.infrastructure;
 
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Declarables;
