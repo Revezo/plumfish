@@ -1,4 +1,4 @@
-package com.traanite.plumfish.raffle.config;
+package com.traanite.plumfish.raffle.infrastructure;
 
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Declarables;

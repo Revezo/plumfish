@@ -8,11 +8,11 @@ import java.time.Instant;
 import java.util.UUID;
 
 @Value
-public class DrawPackageCreatedEvent implements DomainEvent {
+public class RafflePackageDrawn implements DomainEvent {
     @NonNull
     UUID eventId = UUID.randomUUID();
     @NonNull
     Instant when = Instant.now();
     @NonNull
-    DrawPackage drawPackage;
+    RafflePackage rafflePackage;
 }

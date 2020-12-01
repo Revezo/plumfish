@@ -1,4 +1,4 @@
-package com.traanite.plumfish.raffle.service;
+package com.traanite.plumfish.raffle.infrastructure;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Getter
 @Setter
 @ToString
-public class StellarProducerProperties {
+public class RaffleProperties {
 
     private String randomApiKey;
 

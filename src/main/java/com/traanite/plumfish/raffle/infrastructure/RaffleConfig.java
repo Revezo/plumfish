@@ -1,9 +1,11 @@
-package com.traanite.plumfish.raffle.config;
+package com.traanite.plumfish.raffle.infrastructure;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.traanite.plumfish.raffle.application.PackageDrawer;
+import com.traanite.plumfish.raffle.application.RaffleScheduler;
+import com.traanite.plumfish.raffle.model.RandomNumberGenerator;
 import com.traanite.plumfish.raffle.model.Stars;
 import com.traanite.plumfish.raffle.model.Things;
-import com.traanite.plumfish.raffle.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.annotation.Bean;
@@ -22,17 +24,17 @@ public class RaffleConfig {
     private static final String THINGS_FILE = "data/things.json";
     private static final String STARS_FILE = "data/bright-stars-short-v5.json";
 
-    private final StellarProducerProperties properties;
+    private final RaffleProperties properties;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Bean
-    public RandomNumberGenerator randomNumberApi() {
-        return new RandomNumberGenerator(new RestTemplate(), properties.getRandomApiKey(), new Random());
+    public RandomNumberGenerator randomNumberGenerator() {
+        return new RandomNumberGeneratorAdapter(new RestTemplate(), properties.getRandomApiKey(), new Random());
     }
 
     @Bean
     public RaffleScheduler testScheduler(RabbitTemplate rabbitTemplate, RandomNumberGenerator randomNumberGenerator) {
-        return new RaffleScheduler(new PackageDrawer(things(), stars(), randomNumberGenerator), new RaffleEventPublisher(rabbitTemplate));
+        return new RaffleScheduler(new PackageDrawer(things(), stars(), randomNumberGenerator), new RaffleEventPublisherAdapter(rabbitTemplate));
     }
 
     public Things things() {
