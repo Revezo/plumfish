@@ -1,7 +1,6 @@
-package com.traanite.plumfish.raffle.application;
+package com.traanite.plumfish.raffle.model;
 
 import com.traanite.plumfish.commons.events.exception.NullResponseException;
-import com.traanite.plumfish.raffle.model.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -43,7 +42,6 @@ public class PackageDrawer {
         try {
             return randomNumberGenerator.randomInt(range);
         } catch (RandomNumberGeneratorError | NullResponseException e) {
-            // TODO some event here
             log.error("Couldn't get random number", e);
             return null;
         }

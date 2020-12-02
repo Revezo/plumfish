@@ -10,7 +10,7 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
 @Getter
 @Setter
 @ToString
-class TwitterProducerProperties {
+class TwitterProperties {
 
     @NestedConfigurationProperty
     private TwitterAuthentication twitterAuthentication;

@@ -1,13 +1,14 @@
 package com.traanite.plumfish.raffle.infrastructure;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.traanite.plumfish.raffle.application.PackageDrawer;
-import com.traanite.plumfish.raffle.application.RaffleScheduler;
+import com.traanite.plumfish.commons.events.DomainEvents;
+import com.traanite.plumfish.commons.events.exception.ResourceFileNotFoundException;
+import com.traanite.plumfish.raffle.application.DrawPackageScheduler;
+import com.traanite.plumfish.raffle.model.PackageDrawer;
 import com.traanite.plumfish.raffle.model.RandomNumberGenerator;
 import com.traanite.plumfish.raffle.model.Stars;
 import com.traanite.plumfish.raffle.model.Things;
 import lombok.RequiredArgsConstructor;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -16,7 +17,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.InputStreamReader;
 import java.util.Collections;
-import java.util.Random;
 
 @Configuration
 @RequiredArgsConstructor
@@ -29,12 +29,12 @@ public class RaffleConfig {
 
     @Bean
     public RandomNumberGenerator randomNumberGenerator() {
-        return new RandomNumberGeneratorAdapter(new RestTemplate(), properties.getRandomApiKey(), new Random());
+        return new RandomOrgTrueNumberGenerator(new RestTemplate(), properties.getRandomApiKey());
     }
 
     @Bean
-    public RaffleScheduler testScheduler(RabbitTemplate rabbitTemplate, RandomNumberGenerator randomNumberGenerator) {
-        return new RaffleScheduler(new PackageDrawer(things(), stars(), randomNumberGenerator), new RaffleEventPublisherAdapter(rabbitTemplate));
+    public DrawPackageScheduler testScheduler(DomainEvents domainEvents, RandomNumberGenerator randomNumberGenerator) {
+        return new DrawPackageScheduler(new PackageDrawer(things(), stars(), randomNumberGenerator), new RaffleEventsAdapter(domainEvents));
     }
 
     public Things things() {
@@ -43,7 +43,7 @@ public class RaffleConfig {
             Things things = objectMapper.readValue(in, Things.class);
             return new Things(Collections.unmodifiableList(things.getNames()));
         } catch (Exception e) {
-            throw new RuntimeException(e); //TODO make dedicated exception
+            throw new ResourceFileNotFoundException(e, THINGS_FILE);
         }
     }
 
@@ -53,7 +53,7 @@ public class RaffleConfig {
             Stars stars = objectMapper.readValue(in, Stars.class);
             return new Stars(Collections.unmodifiableList(stars.getData()));
         } catch (Exception e) {
-            throw new RuntimeException(e); //TODO make dedicated exception
+            throw new ResourceFileNotFoundException(e, STARS_FILE);
         }
     }
 }

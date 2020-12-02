@@ -11,28 +11,26 @@ import org.springframework.web.client.RestTemplate;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 @RequiredArgsConstructor
 @Slf4j
-public class RandomNumberGeneratorAdapter implements RandomNumberGenerator {
+public class RandomOrgTrueNumberGenerator implements RandomNumberGenerator {
     private static final String RANDOM_API_URI = "https://api.random.org/json-rpc/2/invoke";
 
     private final RestTemplate restTemplate;
     private final String apiKey;
-    private final Random random;
 
     public int randomInt(Range range) throws NullResponseException, RandomNumberGeneratorError {
-        RandomRequest randomRequest = new RandomRequest(random.nextLong(), new RandomRequestParams(apiKey, 1, range.getMin(), range.getMax()));
+        RandomRequest randomRequest = new RandomRequest(ThreadLocalRandom.current().nextLong(), new RandomRequestParams(apiKey, 1, range.getMin(), range.getMax()));
         RandomResponse randomResponse = restTemplate.postForObject(RANDOM_API_URI, randomRequest, RandomResponse.class);
 
         validateResponseOrThrowError(randomRequest, randomResponse);
-        // TODO don't alow null pointer here
         return randomResponse.getResult().getRandom().getData().get(0);
     }
 
     private void validateResponseOrThrowError(RandomRequest randomRequest, RandomResponse randomResponse) throws RandomNumberGeneratorError, NullResponseException {
-        if (!isValidResponse(randomResponse)) {
+        if (isResponseValid(randomResponse)) {
             throw new NullResponseException(RANDOM_API_URI, randomRequest.toString());
         }
         if (randomResponse.getError() != null) {
@@ -40,11 +38,12 @@ public class RandomNumberGeneratorAdapter implements RandomNumberGenerator {
         }
     }
 
-    private boolean isValidResponse(RandomResponse randomResponse) {
-        return randomResponse != null &&
-                ((randomResponse.getResult() != null && randomResponse.getResult().getRandom().getData() != null
-                        && !randomResponse.getResult().getRandom().getData().isEmpty())
-                || randomResponse.getError() != null);
+    private boolean isResponseValid(RandomResponse randomResponse) {
+        return (randomResponse == null || (randomResponse.getError() == null
+                && (randomResponse.getResult() == null
+                || randomResponse.getResult().getRandom() == null
+                || randomResponse.getResult().getRandom().getData() == null
+                || randomResponse.getResult().getRandom().getData().isEmpty())));
     }
 
 

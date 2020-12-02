@@ -8,8 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
-import static com.traanite.plumfish.raffle.infrastructure.RaffleEventConfig.RAFFLE_QUEUE_1;
-import static com.traanite.plumfish.twitter.infrastructure.TwitterEventConfig.TWITTER_QUEUE_1;
+import static com.traanite.plumfish.raffle.infrastructure.RaffleEventsConfig.RAFFLE_QUEUE_1;
+import static com.traanite.plumfish.twitter.infrastructure.TwitterEventsConfig.TWITTER_QUEUE_1;
 
 @Service
 @Slf4j

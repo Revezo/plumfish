@@ -1,10 +1,10 @@
 package com.traanite.plumfish.twitter.infrastructure;
 
+import com.traanite.plumfish.commons.events.DomainEvents;
 import com.traanite.plumfish.twitter.application.TwitterStreamListener;
 import com.traanite.plumfish.twitter.model.TwitterEvents;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.social.InvalidAuthorizationException;
@@ -17,16 +17,16 @@ import java.util.Collections;
 @Configuration
 @RequiredArgsConstructor
 @Slf4j
-public class TwitterProducerConfig {
+public class TwitterConfig {
 
-    private final TwitterProducerProperties twitterPublisherProperties;
+    private final TwitterProperties twitterProperties;
 
     @Bean
     public Twitter twitter() {
-        String consumerKey = twitterPublisherProperties.getTwitterAuthentication().getConsumerKey();
-        String consumerSecret = twitterPublisherProperties.getTwitterAuthentication().getConsumerSecret();
-        String token = twitterPublisherProperties.getTwitterAuthentication().getToken();
-        String tokenSecret = twitterPublisherProperties.getTwitterAuthentication().getTokenSecret();
+        String consumerKey = twitterProperties.getTwitterAuthentication().getConsumerKey();
+        String consumerSecret = twitterProperties.getTwitterAuthentication().getConsumerSecret();
+        String token = twitterProperties.getTwitterAuthentication().getToken();
+        String tokenSecret = twitterProperties.getTwitterAuthentication().getTokenSecret();
 
         TwitterTemplate twitterTemplate = new TwitterTemplate(consumerKey, consumerSecret, token, tokenSecret);
         validateTwitterAuthorization(twitterTemplate);
@@ -39,8 +39,8 @@ public class TwitterProducerConfig {
     }
 
     @Bean
-    public TwitterEvents twitterEvents(RabbitTemplate rabbitTemplate) {
-        return new TwitterEventsAdapter(rabbitTemplate);
+    public TwitterEvents twitterEvents(DomainEvents domainEvents) {
+        return new TwitterEventsAdapter(domainEvents);
     }
 
     private void validateTwitterAuthorization(Twitter twitter) {
