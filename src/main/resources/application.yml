@@ -21,6 +21,8 @@ modules:
         tokenSecret: tokenSecret
   raffle:
     randomApiKey: randomApiKey
+    drawPackageScheduler:
+      delay: 3600000
 ---
 spring:
   datasource:
