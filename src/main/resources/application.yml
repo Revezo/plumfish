@@ -12,7 +12,17 @@ spring:
 logging:
   level:
     "liquibase" : info
-
+modules:
+  twitter:
+    twitter-authentication:
+        consumerKey: consumerKey
+        consumerSecret: consumerSecret
+        token: token
+        tokenSecret: tokenSecret
+  raffle:
+    randomApiKey: randomApiKey
+    drawPackageScheduler:
+      delay: 3600000
 ---
 spring:
   datasource:
