@@ -9,9 +9,7 @@ import java.util.UUID;
 
 @Value
 public class RafflePackageDrawn implements DomainEvent {
-    @NonNull
     UUID eventId = UUID.randomUUID();
-    @NonNull
     Instant when = Instant.now();
     @NonNull
     RafflePackage rafflePackage;

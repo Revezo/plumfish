@@ -1,5 +1,8 @@
 package com.traanite.plumfish.commons.events.exception;
 
+import lombok.Getter;
+
+@Getter
 public class ResourceFileNotFoundException extends RuntimeException {
 
     private final String filePath;

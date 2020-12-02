@@ -10,9 +10,7 @@ import java.util.UUID;
 @Value
 public class TweetCreated implements DomainEvent {
 
-    @NonNull
     UUID eventId = UUID.randomUUID();
-    @NonNull
     Instant when = Instant.now();
     @NonNull
     TwitterMessage twitterMessage;
