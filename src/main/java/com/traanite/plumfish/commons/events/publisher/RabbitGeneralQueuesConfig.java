@@ -19,7 +19,7 @@ public class RabbitGeneralQueuesConfig {
     }
 
     @Bean
-    public Declarables raffleBindings(FanoutExchange errorExchange) {
+    public Declarables errorBindings(FanoutExchange errorExchange) {
         Queue queue1 = new Queue(ERROR_QUEUE_1, false);
 
         return new Declarables(

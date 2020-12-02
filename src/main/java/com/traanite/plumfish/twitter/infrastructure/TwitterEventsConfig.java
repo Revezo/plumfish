@@ -19,12 +19,12 @@ public class TwitterEventsConfig {
     }
 
     @Bean
-    public Declarables twitterBindings(FanoutExchange fanoutExchange) {
+    public Declarables twitterBindings(FanoutExchange twitterExchange) {
         Queue queue1 = new Queue(TWITTER_QUEUE_1, false);
 
         return new Declarables(
                 queue1,
-                BindingBuilder.bind(queue1).to(fanoutExchange)
+                BindingBuilder.bind(queue1).to(twitterExchange)
         );
     }
 }
