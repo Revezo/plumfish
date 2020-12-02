@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class TwitterEventConfig {
+public class TwitterEventsConfig {
 
     public static final String TWITTER_EXCHANGE_1 = "twitter.exchange.1";
     public static final String TWITTER_QUEUE_1 = "twitter.queue.1";

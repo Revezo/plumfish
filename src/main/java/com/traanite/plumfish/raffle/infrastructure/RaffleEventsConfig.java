@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class RaffleEventConfig {
+public class RaffleEventsConfig {
 
     public static final String RAFFLE_EXCHANGE_1 = "raffle.exchange.1";
     public static final String RAFFLE_QUEUE_1 = "raffle.queue.1";
