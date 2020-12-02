@@ -1,6 +1,5 @@
 # plumfish
-Here will be something in the future, about rabbitMQ, modular monolyth, twitter pulls and hopefully more
+Application consisting of modules sending events through RabbitMQ
 
-Initial HLD
+More descriptive HLD than the first version
 ![High Level Design](docs/HLD_0.2v.PNG)
-Communication between services using RabbitMQ queue
