@@ -38,7 +38,7 @@ public class TwitterStreamListener implements StreamListener {
 
     @Override
     public void onWarning(StreamWarningEvent warningEvent) {
-        // not needed
+        // TODO
     }
 }
 

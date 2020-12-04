@@ -11,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 @RequiredArgsConstructor
@@ -21,12 +22,20 @@ public class RandomOrgTrueNumberGenerator implements RandomNumberGenerator {
     private final RestTemplate restTemplate;
     private final String apiKey;
 
-    public int randomInt(Range range) throws NullResponseException, RandomNumberGeneratorError {
+    public Optional<Integer> randomInt(Range range) {
         RandomRequest randomRequest = new RandomRequest(ThreadLocalRandom.current().nextLong(), new RandomRequestParams(apiKey, 1, range.getMin(), range.getMax()));
         RandomResponse randomResponse = restTemplate.postForObject(RANDOM_API_URI, randomRequest, RandomResponse.class);
+        return retrieveRandomIntegerFromApiResponse(randomRequest, randomResponse);
+    }
 
-        validateResponseOrThrowError(randomRequest, randomResponse);
-        return randomResponse.getResult().getRandom().getData().get(0);
+    private Optional<Integer> retrieveRandomIntegerFromApiResponse(RandomRequest randomRequest, RandomResponse randomResponse) {
+        try {
+            validateResponseOrThrowError(randomRequest, randomResponse);
+            return Optional.of(randomResponse.getResult().getRandom().getData().get(0));
+        } catch (RandomNumberGeneratorError | NullResponseException e) {
+            log.error("Couldn't get random number", e);
+            return Optional.empty();
+        }
     }
 
     private void validateResponseOrThrowError(RandomRequest randomRequest, RandomResponse randomResponse) throws RandomNumberGeneratorError, NullResponseException {

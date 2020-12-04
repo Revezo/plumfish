@@ -16,7 +16,7 @@ public class DrawPackageScheduler {
     private final RaffleEvents raffleEvents;
 
     @Scheduled(fixedDelayString = "${modules.raffle.drawPackageScheduler.delay}")
-    public void test() {
+    public void handlePackageDraw() {
         packageDrawer.drawPackage().ifPresentOrElse(drawPackage -> raffleEvents.publish(new RafflePackageDrawn(drawPackage)),
                 () -> {
                     log.error("DrawPackage empty");
