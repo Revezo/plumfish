@@ -22,7 +22,8 @@ modules:
   raffle:
     randomApiKey: randomApiKey
     drawPackageScheduler:
-      delay: 3600000
+#      delay: 3600000
+      delay: 10000
 ---
 spring:
   datasource:

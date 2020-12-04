@@ -1,8 +1,8 @@
 package com.traanite.plumfish.raffle.model;
 
-import com.traanite.plumfish.commons.events.exception.NullResponseException;
+import java.util.Optional;
 
 public interface RandomNumberGenerator {
 
-    int randomInt(Range range) throws NullResponseException, RandomNumberGeneratorError;
+    Optional<Integer> randomInt(Range range);
 }
