@@ -22,6 +22,7 @@ public class TwitterEventsHandler {
         log.trace("RECEIVED: {}", tweetCreated);
         packageRepository.lastRandomPackage().flatMap(randomPackage -> juryVerdictResolver.giveVerdict(tweetCreated.getTwitterMessage(), randomPackage))
                 .ifPresent(domainEvent -> {
+                    // TODO such instance checks can be quite nicely replaced with vavr.io
                     if (domainEvent instanceof MainPrizeWon) {
                         juryEvents.publish((MainPrizeWon) domainEvent);
                     } else if (domainEvent instanceof SecondaryPrizeWon) {

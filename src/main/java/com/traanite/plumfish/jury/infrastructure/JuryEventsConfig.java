@@ -23,14 +23,14 @@ public class JuryEventsConfig {
     }
 
     @Bean
-    public Declarables raffleBindings(DirectExchange juryExchange) {
+    public Declarables juryBindings(DirectExchange juryExchange) {
         Queue queue1 = new Queue(JURY_MAIN_PRIZE_QUEUE, false);
         Queue queue2 = new Queue(JURY_SECONDARY_PRIZE_QUEUE, false);
 
         return new Declarables(
                 queue1, queue2,
                 BindingBuilder.bind(queue1).to(juryExchange).with(JURY_MAIN_PRIZE_ROUTING),
-                BindingBuilder.bind(queue1).to(juryExchange).with(JURY_SECONDARY_PRIZE_ROUTING)
+                BindingBuilder.bind(queue2).to(juryExchange).with(JURY_SECONDARY_PRIZE_ROUTING)
         );
     }
 }

@@ -1,5 +1,6 @@
 package com.traanite.plumfish.raffle.application;
 
+import com.traanite.plumfish.commons.events.DomainEvent;
 import com.traanite.plumfish.raffle.model.PackageDrawer;
 import com.traanite.plumfish.raffle.model.RaffleEvents;
 import com.traanite.plumfish.raffle.model.RafflePackageDrawFailed;
@@ -17,10 +18,12 @@ public class DrawPackageScheduler {
 
     @Scheduled(fixedDelayString = "${modules.raffle.drawPackageScheduler.delay}")
     public void handlePackageDraw() {
-        packageDrawer.drawPackage().ifPresentOrElse(drawPackage -> raffleEvents.publish(new RafflePackageDrawn(drawPackage)),
-                () -> {
-                    log.error("DrawPackage empty");
-                    raffleEvents.publish(new RafflePackageDrawFailed());
-                });
+        DomainEvent drawPackageResult = packageDrawer.drawPackage();
+        // TODO such instance checks can be quite nicely replaced with vavr.io
+        if (drawPackageResult instanceof RafflePackageDrawn) {
+            raffleEvents.publish((RafflePackageDrawn) drawPackageResult);
+        } else if (drawPackageResult instanceof RafflePackageDrawFailed) {
+            raffleEvents.publish((RafflePackageDrawFailed) drawPackageResult);
+        }
     }
 }
