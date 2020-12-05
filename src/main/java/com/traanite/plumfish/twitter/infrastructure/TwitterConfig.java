@@ -23,10 +23,10 @@ public class TwitterConfig {
 
     @Bean
     public Twitter twitter() {
-        String consumerKey = twitterProperties.getTwitterAuthentication().getConsumerKey();
-        String consumerSecret = twitterProperties.getTwitterAuthentication().getConsumerSecret();
-        String token = twitterProperties.getTwitterAuthentication().getToken();
-        String tokenSecret = twitterProperties.getTwitterAuthentication().getTokenSecret();
+        String consumerKey = twitterProperties.getAuthentication().getConsumerKey();
+        String consumerSecret = twitterProperties.getAuthentication().getConsumerSecret();
+        String token = twitterProperties.getAuthentication().getToken();
+        String tokenSecret = twitterProperties.getAuthentication().getTokenSecret();
 
         TwitterTemplate twitterTemplate = new TwitterTemplate(consumerKey, consumerSecret, token, tokenSecret);
         validateTwitterAuthorization(twitterTemplate);

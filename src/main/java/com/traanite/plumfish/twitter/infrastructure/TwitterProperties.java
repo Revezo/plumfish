@@ -13,7 +13,7 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
 class TwitterProperties {
 
     @NestedConfigurationProperty
-    private TwitterAuthentication twitterAuthentication;
+    private TwitterAuthentication authentication;
 
 }
 
