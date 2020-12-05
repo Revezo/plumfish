@@ -13,13 +13,17 @@ import static com.traanite.plumfish.jury.infrastructure.JuryEventsConfig.JURY_SE
 @RequiredArgsConstructor
 public class JuryEventsHandler {
 
+    private final MailSender mailSender;
+
     @RabbitListener(queues = JURY_MAIN_PRIZE_QUEUE)
     public void receiveMessage(final MainPrizeWon mainPrizeWon) {
+        mailSender.sendMail(mainPrizeWon);
         log.info("RECEIVED: {}", mainPrizeWon);
     }
 
     @RabbitListener(queues = JURY_SECONDARY_PRIZE_QUEUE)
     public void receiveMessage(final SecondaryPrizeWon secondaryPrizeWon) {
+        mailSender.sendMail(secondaryPrizeWon);
         log.info("RECEIVED: {}", secondaryPrizeWon);
     }
 
