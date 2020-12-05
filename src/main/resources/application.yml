@@ -9,12 +9,23 @@ spring:
     username: admin
     password: admin
     addresses: rabbitmq:5672
+  mail:
+    host: host
+    port: 587
+    username: username
+    password: password
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 logging:
   level:
     "liquibase" : info
 modules:
   twitter:
-    twitter-authentication:
+    authentication:
         consumerKey: consumerKey
         consumerSecret: consumerSecret
         token: token
@@ -22,8 +33,9 @@ modules:
   raffle:
     randomApiKey: randomApiKey
     drawPackageScheduler:
-#      delay: 3600000
-      delay: 10000
+      delay: 3600000
+  mail:
+    admins: mail1@example,mail2@example
 ---
 spring:
   datasource:
