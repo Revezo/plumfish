@@ -20,7 +20,9 @@ public class TwitterEventsHandler {
     @RabbitListener(queues = TWITTER_QUEUE_1, concurrency = "3")
     public void receiveMessage(final TweetCreated tweetCreated) {
         log.trace("RECEIVED: {}", tweetCreated);
-        packageRepository.lastRandomPackage().flatMap(randomPackage -> juryVerdictResolver.giveVerdict(tweetCreated.getTwitterMessage(), randomPackage))
+        packageRepository.lastRandomPackage()
+                .flatMap(randomPackage -> juryVerdictResolver
+                        .giveVerdict(tweetCreated.getTwitterMessage(), randomPackage))
                 .ifPresent(domainEvent -> {
                     // TODO such instance checks can be quite nicely replaced with vavr.io
                     if (domainEvent instanceof MainPrizeWon) {

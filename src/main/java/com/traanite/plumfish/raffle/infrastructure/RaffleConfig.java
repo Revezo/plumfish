@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.web.client.RestTemplate;
 
 import java.io.InputStreamReader;
 import java.util.Collections;
@@ -29,7 +28,8 @@ public class RaffleConfig {
 
     @Bean
     public RandomNumberGenerator randomNumberGenerator() {
-        return new RandomOrgTrueNumberGenerator(new RestTemplate(), properties.getRandomApiKey());
+//        return new RandomOrgTrueNumberGenerator(new RestTemplate(), properties.getRandomApiKey());
+        return new PseudoRandomNumberGenerator();
     }
 
     @Bean

@@ -21,8 +21,7 @@ public class TwitterStreamListener implements StreamListener {
     @Override
     public void onTweet(Tweet tweet) {
         if (tweet.getLanguageCode().equals("en")) {
-            twitterEvents.publish(new TweetCreated(
-                    new TwitterMessage(tweet.getText(), new TwitterUser(tweet.getUser().getId(), tweet.getUser().getName()))));
+            twitterEvents.publish(new TweetCreated(new TwitterMessage(tweet.getText(), new TwitterUser(tweet.getUser().getId(), tweet.getUser().getName()))));
         }
     }
 

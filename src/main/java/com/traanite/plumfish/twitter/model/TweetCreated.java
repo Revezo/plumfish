@@ -14,6 +14,4 @@ public class TweetCreated implements DomainEvent {
     Instant when = Instant.now();
     @NonNull
     TwitterMessage twitterMessage;
-
-
 }
