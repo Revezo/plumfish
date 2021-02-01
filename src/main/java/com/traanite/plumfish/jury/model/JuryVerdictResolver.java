@@ -13,10 +13,10 @@ public class JuryVerdictResolver {
     public Optional<DomainEvent> giveVerdict(@NonNull TwitterMessage twitterMessage, @NonNull RandomPackage randomPackage) {
         //todo
         if (twitterMessage.getText().length() == randomPackage.getNumber() + randomPackage.getStar().getHr()) {
-            log.info("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" + randomPackage);
+            log.info("Generating MainPrizeWon" + randomPackage);
             return Optional.of(new MainPrizeWon(twitterMessage.getCreator()));
         } else if (twitterMessage.getText().length() == 100) {
-            log.info("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB" + twitterMessage + " " + randomPackage);
+            log.info("Generating SecondaryPrizeWon" + twitterMessage + " " + randomPackage);
             return Optional.of(new SecondaryPrizeWon(twitterMessage.getCreator()));
         }
         return Optional.empty();
